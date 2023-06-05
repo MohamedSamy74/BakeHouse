@@ -5,17 +5,24 @@ pipeline {
         stage('build') {
             steps {
                 echo 'build'
-                sh "ls"
-                sh '''
-                echo ${BUILD_NUMBER}
-                '''
+                script{
+//                     if (params.ENV == "release") {
+                        withCredentials([usernamePassword(credentialsId: 'my-dockerhub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                            sh '''
+                                docker login -u ${USERNAME} -p ${PASSWORD}
+                                docker build -t msami74/bakehouseiti:v${BUILD_NUMBER} .
+                                docker push msami74/bakehouseiti:v${BUILD_NUMBER}
+                                echo ${BUILD_NUMBER} > ../build.txt
+                            '''
+//                         }
+                    }
+//                     else {
+//                         echo "user choosed ${params.ENV}"
+//                     }
+                }
             }
         }
-        stage('test') {
-            steps {
-                echo 'test'
-            }
-        }
+
         stage('deploy') {
             steps {
                 echo 'deploy'
@@ -30,7 +37,7 @@ pipeline {
 
 
 // pipeline {
-//     agent { label 'iti-smart' }
+//     agent { label 'my-project' }
 //     parameters {
 //         choice(name: 'ENV', choices: ['dev', 'test', 'prod',"release"])
 //     } 
