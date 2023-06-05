@@ -27,19 +27,19 @@ pipeline {
         stage('deploy') {
             steps {
                 echo 'deploy'
-//                 script {
+                script {
 //                     if (params.ENV == "dev" || params.ENV == "test" || params.ENV == "prod") {
-//                         withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
-//                             sh '''
-//                                 export BUILD_NUMBER=$(cat ../build.txt)
-//                                 mv Deployment/deploy.yaml Deployment/deploy.yaml.tmp
-//                                 cat Deployment/deploy.yaml.tmp | envsubst > Deployment/deploy.yaml
-//                                 rm -f Deployment/deploy.yaml.tmp
-//                                 kubectl apply -f Deployment --kubeconfig ${KUBECONFIG} -n ${ENV}
-//                             '''
-//                         }
+                        withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
+                            sh '''
+                                export BUILD_NUMBER=$(cat ../build.txt)
+                                mv Deployment/deploy.yaml Deployment/deploy.yaml.tmp
+                                cat Deployment/deploy.yaml.tmp | envsubst > Deployment/deploy.yaml
+                                rm -f Deployment/deploy.yaml.tmp
+                                kubectl apply -f Deployment --kubeconfig ${KUBECONFIG} -n ${ENV}
+                            '''
+                        }
 //                     }
-//                 }
+                }
             }
         }
     }
