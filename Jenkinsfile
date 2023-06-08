@@ -1,5 +1,5 @@
 pipeline {
-    agent { label 'myagent' }
+    agent { label 'my-project' }
     stages {
         stage('build') {
             steps {
@@ -9,8 +9,8 @@ pipeline {
                         withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                             sh '''
                                 docker login -u ${USERNAME} -p ${PASSWORD}
-                                docker build -t ahmadesmailshata/bakehouseiti:v${BUILD_NUMBER} .
-                                docker push ahmadesmailshata/bakehouseiti:v${BUILD_NUMBER}
+                                docker build -t msami74/bakehouseiti:v${BUILD_NUMBER} .
+                                docker push msami74/bakehouseiti:v${BUILD_NUMBER}
                                 echo ${BUILD_NUMBER} > ../build.txt
                             '''
                         }
