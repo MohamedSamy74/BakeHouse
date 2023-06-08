@@ -24,7 +24,7 @@ pipeline {
                 echo 'deploy'
                 script {
                     
-                        withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
+                        withCredentials([file(credentialsId: 'my-kubeconfig', variable: 'KUBECONFIG')]) {
                             sh '''
                               
                                 mv Deployment/deploy.yaml Deployment/deploy.yaml.tmp
