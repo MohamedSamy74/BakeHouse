@@ -6,7 +6,7 @@ pipeline {
                 echo 'build'
                 script{
 //                     if (BRANCH_NAME == "dev" || BRANCH_NAME == "test" || BRANCH_NAME == "preprod") {
-                        withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                        withCredentials([usernamePassword(credentialsId: 'my-dockerhub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                             sh '''
                                 docker login -u ${USERNAME} -p ${PASSWORD}
                                 docker build -t msami74/bakehouseiti:v${BUILD_NUMBER} .
