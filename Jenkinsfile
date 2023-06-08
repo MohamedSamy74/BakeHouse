@@ -30,7 +30,7 @@ pipeline {
                                 mv Deployment/deploy.yaml Deployment/deploy.yaml.tmp
                                 cat Deployment/deploy.yaml.tmp | envsubst > Deployment/deploy.yaml
                                 rm -f Deployment/deploy.yaml.tmp
-                                kubectl apply -f Deployment/deploy.yaml --kubeconfig ${KUBECONFIG}
+                                kubectl apply -f *.yaml --kubeconfig ${KUBECONFIG}
                             '''
                         }
                   
