@@ -4,7 +4,9 @@ pipeline {
     stages {
         stage('build') {
             steps {
+                sh '''
                 kubectl get pod
+                '''
             }
         }
         stage('test') {
