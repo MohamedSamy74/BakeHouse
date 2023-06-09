@@ -5,7 +5,7 @@ pipeline {
             steps {
                 echo 'build'
                 script{
-//                     if (BRANCH_NAME == "dev" || BRANCH_NAME == "test" || BRANCH_NAME == "preprod") {
+                    if (BRANCH_NAME == "dev" || BRANCH_NAME == "test" || BRANCH_NAME == "preprod") {
                         withCredentials([usernamePassword(credentialsId: 'my-dockerhub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                             sh '''
                                 docker login -u ${USERNAME} -p ${PASSWORD}
@@ -14,10 +14,10 @@ pipeline {
                                 echo ${BUILD_NUMBER} > ../build.txt
                             '''
                         }
-//                     }
-//                     else {
-//                         echo "user choosed ${BRANCH_NAME}"
-//                     }
+                    }
+                    else {
+                        echo "user choosed ${BRANCH_NAME}"
+                    }
                 }
             }
         }
@@ -25,7 +25,7 @@ pipeline {
             steps {
                 echo 'deploy'
                 script {
-//                     if (BRANCH_NAME == "release") {
+                    if (BRANCH_NAME == "release") {
                         withCredentials([file(credentialsId: 'new-config', variable: 'KUBECONFIG')]) {
                             sh '''
                                 export BUILD_NUMBER=$(cat ../build.txt)
@@ -35,7 +35,7 @@ pipeline {
                                 kubectl apply -f Deployment --kubeconfig=${KUBECONFIG}
                             '''
                         }
-//                     }
+                    }
                 }
             }
         }
